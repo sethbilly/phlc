@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+         xmlns:pa="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Login</title>
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+        <!-- Global stylesheets -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css"/>
+        <link href="#{application.contextPath}/resources/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css"/>
+        <link href="#{application.contextPath}/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="#{application.contextPath}/resources/css/core.css" rel="stylesheet" type="text/css"/>
+        <link href="#{application.contextPath}/resources/css/components-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="#{application.contextPath}/resources/css/colors.css" rel="stylesheet" type="text/css"/>
+        <!-- /global stylesheets -->
+
+
+
+    </h:head>
+    <h:body class="login-container">
+
+        <!-- Page container -->
+        <div class="page-container">
+
+            <!-- Page content -->
+            <div class="page-content">
+
+                <!-- Main content -->
+                <div class="content-wrapper">
+
+                    <!-- Content area -->
+                    <div class="content">
+
+                        <!-- Advanced login -->
+                   <h:form>
+                            <div class="panel panel-body login-form">
+                                <div class="text-center">
+                                    <div>
+                                        <img src="#{application.contextPath}/resources/images/phc_ltd.png" style="height: 70px;width: 200px;"/>
+                                    </div>
+                                    <h5 class="content-group">Login to your account <small class="display-block">Your credentials</small></h5>
+                                </div>
+
+                                <div class="form-group has-feedback has-feedback-left">
+                                    <h:inputText class="form-control"  pa:placeholder="Email" value="#{loginController.username}"/>
+                                    <div class="form-control-feedback">
+                                        <i class="icon-user text-muted"></i>
+                                    </div>
+                                </div>
+
+                                <div class="form-group has-feedback has-feedback-left">
+                                    <h:inputSecret class="form-control"  pa:placeholder="Password" value="#{loginController.passwd}"/>
+                                    <div class="form-control-feedback">
+                                        <i class="icon-lock2 text-muted"></i>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <h:commandLink class="btn bg-blue btn-block" action="#{loginController.login()}">
+                                        <i class="icon-arrow-right14 position-right"></i>
+                                        Login
+                                    </h:commandLink>
+                                </div>
+
+                            </div>
+                        </h:form>
+                        <!-- /advanced login -->
+
+
+                        <!-- Footer -->
+                        <div class="footer text-muted text-center">
+                            &copy; 2016. <a href="#van">Pacific Heaven Logistics Company Ltd.</a>
+                        </div>
+                        <!-- /footer -->
+
+                    </div>
+                    <!-- /content area -->
+
+                </div>
+                <!-- /main content -->
+
+            </div>
+            <!-- /page content -->
+
+        </div>
+        <!-- /page container -->
+
+
+        <!-- Core JS files -->
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/plugins/loaders/pace.min.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/core/libraries/jquery.min.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/core/libraries/bootstrap.min.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/plugins/loaders/blockui.min.js"></script>
+        <!-- /core JS files -->
+
+        <!-- Theme JS files -->
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/plugins/visualization/d3/d3.min.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/plugins/visualization/d3/d3_tooltip.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/plugins/forms/styling/switchery.min.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/plugins/forms/styling/uniform.min.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/plugins/ui/moment/moment.min.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/plugins/pickers/daterangepicker.js"></script>
+
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/core/app.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/pages/dashboard.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/pages/layout_fixed_native.js"></script>
+        <!-- /theme JS files -->
+    </h:body>
+</html>
+

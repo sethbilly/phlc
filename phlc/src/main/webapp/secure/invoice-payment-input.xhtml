@@ -1,0 +1,64 @@
+<h:panelGroup
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+    <div class="row">
+        <div class="col-lg-12">
+            <h:form id="paymentForm">
+                <p:panel header="Payment for #{invoiceItemController.selectedInovice.invoiceNumber}" >
+                    <h:panelGroup>
+                        <h:panelGrid columns="2" styleClass="spaced-table">
+                            <h:outputText value="Payment Date" />
+                            <p:calendar value="#{invoicePaymentController.invoicePayment.paymentDate}" pattern="dd/MM/yyyy" disabled="true"/>
+                            <h:outputText value="Amount"/>
+                            <p:inputText value="#{invoicePaymentController.invoicePayment.amountPaying}"/>
+                            <h:outputText value="Payment Type"/>
+                            <p:selectOneMenu value="#{invoicePaymentController.invoicePayment.paymentType}" >
+                                <p:ajax process="@form" update="paymentNoLbl,paymentNo" event="change" 
+                                        listener="#{invoicePaymentController.paymentTypeChange()}" />
+                                <f:selectItem itemLabel="--Select Type--" />
+                                <f:selectItems value="#{commonOptions.paymentTypesList}" />
+                            </p:selectOneMenu>
+                            <h:outputText value="Payment Number" id="paymentNoLbl" rendered="#{invoicePaymentController.renderPaymentNumberInput}"/>
+                            <p:inputText id="paymentNo" value="#{invoicePaymentController.invoicePayment.paymentNumber}" rendered="#{invoicePaymentController.renderPaymentNumberInput}"/>
+                        </h:panelGrid> 
+
+                        <h:panelGrid columns="2" styleClass="spaced-table">
+                            <p:commandButton value="Save Payment" ajax="false" action="#{invoicePaymentController.saveInvoicePayment()}"/>
+                            <p:commandButton value="Clear" ajax="false" action="#{invoicePaymentController.clearForm()}"/>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                </p:panel>
+            </h:form>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <p:panel header="Invoice Payments">
+                <p:dataTable value="#{invoicePaymentController.invoicePaymentsList}" var="invPayment">
+
+                    <p:column headerText="Date Paid">
+                        <latlabfaces:dateDisplay value="#{invPayment.paymentDate}"/>
+                    </p:column>
+                    <p:column headerText="Amount">
+                        <latlabfaces:doubleDisplay value="#{invPayment.amountPaying}"/>
+                    </p:column>
+                    <p:column headerText="Actions">
+                        <h:form>
+                            <p:commandLink value="Select" action="#{invoicePaymentController.selectInvoicePayment(invPayment)}" ajax="true"
+                                           update="@form :paymentForm"/> |
+                            <p:commandLink value="Delete" action="#{invoiceItemController.deleteInvoiceItem(invItem)}" ajax="false"
+                                           />
+                        </h:form>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </div>
+    </div>
+
+</h:panelGroup>
+

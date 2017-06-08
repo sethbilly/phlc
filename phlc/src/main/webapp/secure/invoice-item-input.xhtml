@@ -1,0 +1,97 @@
+<h:panelGroup
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <div class="row">
+        <div class="col-lg-4">
+            <h:form id="itemForm">
+                <p:panel header="Invoice Item For #{invoiceItemController.selectedInovice.invoiceNumber}" >
+                    <h:panelGroup>
+                        <h:panelGrid columns="2" styleClass="spaced-table">
+                            <h:outputText value="Rate"/>
+                            <p:inputText value="#{invoiceItemController.invoiceItem.rate}"/>
+                            <h:outputText value="Ex Rate"/>
+                            <p:inputText value="#{invoiceItemController.invoiceItem.exRate}"/>
+                            <h:outputText value="Amount"/>
+                            <p:inputText value="#{invoiceItemController.invoiceItem.amount}"/>
+                            <h:outputText value="Item Type"/>
+                            <p:selectOneMenu value="#{invoiceItemController.invoiceItem.invoiceItemType}">
+                                <f:selectItem itemLabel="--Select Type--" />
+                                <f:selectItems value="#{commonOptions.invoiceItemTypesList}" />
+                            </p:selectOneMenu>
+                            <h:outputText value="Item Description"/>
+                            <p:inputTextarea value="#{invoiceItemController.invoiceItem.itemDescription}"/>
+                        </h:panelGrid> 
+
+                        <h:panelGrid columns="2" styleClass="spaced-table">
+                            <p:commandButton value="Add Item" ajax="false" action="#{invoiceItemController.addInvoiceItem()}"/>
+                            <p:commandButton value="Clear" />
+                        </h:panelGrid>
+                    </h:panelGroup>
+                </p:panel>
+            </h:form>
+
+        </div>
+        <div class="col-lg-8">
+            <h:form id="itemsForm">
+                <h:panelGroup rendered="#{invoiceItemController.invoiceItemsList.size() gt 0}" >
+                    <p:panel header="Invoice Items List" >
+                        <p:dataTable value="#{invoiceItemController.invoiceItemsList}" var="invItem">
+                            <p:column headerText="Rate">
+                                <h:outputText value="#{invItem.rate}"/>
+                            </p:column>
+                            <p:column headerText="Ex Rate">
+                                <h:outputText value="#{invItem.exRate}"/>
+                            </p:column>
+                            <p:column headerText="Amount">
+                                <h:outputText value="#{invItem.amount}"/>
+                            </p:column>
+                            <p:column headerText="Item Description">
+                                <h:outputText value="#{invItem.itemDescription}"/>
+                            </p:column>
+                            <p:column headerText="Action">
+                                <p:commandLink value="Remove" action="#{invoiceItemController.removeInvoiceItem(invItem)}" ajax="true"
+                                               update="itemsForm"/>
+                            </p:column>
+                        </p:dataTable><br />
+                    </p:panel>
+                    <h:panelGrid styleClass="spaced-table pull-right" columns="2">
+                        <p:commandButton  value="Save" action="#{invoiceItemController.saveInvoiceItems()}" ajax="false"/>
+                        <p:commandButton value="Clear List" action="#{invoiceItemController.clearInvoiceItemsList()}" ajax="false" />
+                    </h:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <p:panel header="Invoice Items">
+                <p:dataTable value="#{invoiceItemController.invoiceItems}" var="invItem">
+                    <p:column headerText="Rate">
+                        <h:outputText value="#{invItem.rate}"/>
+                    </p:column>
+                    <p:column headerText="Ex Rate">
+                        <h:outputText value="#{invItem.exRate}"/>
+                    </p:column>
+                    <p:column headerText="Amount">
+                        <h:outputText value="#{invItem.amount}"/>
+                    </p:column>
+                    <p:column headerText="Item Description">
+                        <h:outputText value="#{invItem.itemDescription}"/>
+                    </p:column>
+                    <p:column headerText="Actions">
+                        <h:form>
+                            <p:commandLink value="Select" action="#{invoiceItemController.deleteInvoiceItem(invItem)}" ajax="true"
+                                           update="@form :itemForm"/> |
+                            <p:commandLink value="Delete" action="#{invoiceItemController.deleteInvoiceItem(invItem)}" ajax="false"
+                                           />
+                        </h:form>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </div>
+    </div>
+
+</h:panelGroup>
+

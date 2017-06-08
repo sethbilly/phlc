@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="appTemplate.xhtml">
+        <ui:define name="mainMenu">
+            Customer
+        </ui:define>
+        <ui:define name="subMenu">
+            Customer Info
+        </ui:define>
+        <ui:define name="pageContent">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-flat">
+
+                        <div class="panel-body" style="display: block;">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h:form id="clientForm">
+                                        <p:panel header="Staff Information">
+                                            <h:panelGroup>
+
+                                                <h:panelGrid columns="2" styleClass="spaced-table">
+
+                                                    <h:outputText value="Customer Name" styleClass="field-label"/>
+                                                    <p:inputText value="#{staffController.staff.fullName}" style="width: 350px;"/>
+
+                                                    <h:outputText value="Mobile Number" styleClass="field-label"/>
+                                                    <p:inputText value="#{staffController.staff.mobileNumber}" style="width: 350px;"/>
+
+                                                    <h:outputText value="Telephone Number" styleClass="field-label"/>
+                                                    <p:inputText value="#{staffController.staff.telephoneNumber}" style="width: 350px;"/>
+
+                                                    <h:outputText value="Email Address" styleClass="field-label"/>
+                                                    <p:inputText value="#{staffController.staff.email}" style="width: 350px;"/>
+
+                                                    <h:outputText value="Address" styleClass="field-label"/>
+                                                    <p:inputTextarea value="#{staffController.staff.address}" style="width: 350px;">
+                                                    </p:inputTextarea>
+
+                                                </h:panelGrid>
+                                            </h:panelGroup>
+                                            <h:panelGrid columns="2" styleClass="spaced-table">
+                                                <p:commandButton value="Save" ajax="false"
+                                                                 action="#{staffController.saveStaff()}"/>
+                                                <p:commandButton value="Clear" ajax="false"
+                                                                 action="#{staffController.clearForm()}"/>
+
+                                            </h:panelGrid>
+
+                                        </p:panel>
+                                    </h:form>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <h:form>
+                                        <p:panel header="Staff List">
+                                            <p:dataTable value="#{staffController.staffsList}" var="cust" paginator="true" rows="15"
+                                                         paginatorPosition="bottom">
+
+                                                <p:column headerText="FullName" styleClass="field-label">
+                                                    <h:outputText value="#{cust.fullName}" />
+                                                </p:column>
+
+                                                <p:column headerText="Mobile No." styleClass="field-label">
+                                                    <h:outputText value="#{cust.mobileNumber}" />
+                                                </p:column>
+
+
+                                                <p:column headerText="Actions" styleClass="field-label">
+                                                    <p:commandLink value="Select" update="@form :clientForm" ajax="true"
+                                                                   action="#{staffController.selectStaff(cust)}"/> |
+                                                    <p:commandLink update="@form" value="Delete" ajax="true"
+                                                                   action="#{staffController.deleteStaff(cust)}" />
+                                                </p:column>
+                                            </p:dataTable>
+                                        </p:panel>
+                                    </h:form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

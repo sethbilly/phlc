@@ -1,0 +1,59 @@
+<h:panelGroup
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <div class="row">
+        <div class="col-lg-12">
+            <h:form id="chargeForm">
+                <p:panel header="Invoice Charge For #{invoiceChargeController.selectedInovice.invoiceNumber}" >
+                    <h:panelGroup>
+                        <h:panelGrid columns="2" styleClass="spaced-table">
+                            <h:outputText value="Amount"/>
+                            <p:inputText value="#{invoiceChargeController.invoiceCharge.amountPaying}"/>
+                            <h:outputText value="Item Description"/>
+                            <p:inputTextarea value="#{invoiceChargeController.invoiceCharge.description}"/>
+                            <h:outputText value="Payment Type"/>
+                            <p:selectOneMenu value="#{invoiceChargeController.invoiceCharge.paymentType}">
+                                <f:selectItem itemLabel="--Select Item--" />
+                                <f:selectItems value="#{commonOptions.paymentTypesList}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid> 
+
+                        <h:panelGrid columns="2" styleClass="spaced-table">
+                            <p:commandButton value="Save" ajax="false" action="#{invoiceChargeController.saveInvoiceCharge()}"/>
+                            <p:commandButton value="Clear" ajax="false" action="#{invoiceChargeController.clearForm()}"/>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                </p:panel>
+            </h:form>
+
+        </div>
+        
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <p:panel header="Invoice Items">
+                <p:dataTable value="#{invoiceChargeController.invoiceChargesList}" var="charge">
+                    
+                    <p:column headerText="Amount">
+                        <h:outputText value="#{charge.amountPaying}"/>
+                    </p:column>
+                    <p:column headerText="Description">
+                        <h:outputText value="#{charge.description}"/>
+                    </p:column>
+                    <p:column headerText="Actions">
+                        <h:form>
+                            <p:commandLink value="Select" action="#{invoiceChargeController.selectInvoiceCharge(charge)}" ajax="true"
+                                           update="@form :chargeForm"/> |
+                            <p:commandLink value="Delete" action="#{invoiceChargeController.deleteInvoiceCharge(charge)}" ajax="false"
+                                           />
+                        </h:form>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </div>
+    </div>
+
+</h:panelGroup>
+

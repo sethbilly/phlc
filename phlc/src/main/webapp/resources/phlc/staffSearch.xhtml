@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <cc:interface>
+        <cc:attribute name="ajax" default="false" />
+        <cc:attribute name="overlay" default="false"/>
+        <cc:attribute name="rows" default="10" />
+
+        <cc:attribute name="staffSelectAction" required="false"
+                      method-signature="java.lang.String action()" />
+    </cc:interface>
+
+    <cc:implementation>
+        <h:panelGrid columns="4">
+            <h:outputLabel value="Email/Mobile No."/>
+            <h:inputText value="#{staffSearchController.searchText}" style="height: 30px;"/>
+            <p:commandButton value="Search" style="height: 30px;"
+                             ajax="true"
+                             action="#{staffSearchController.searchConsignment()}" update="staffPanel"/>
+        </h:panelGrid>
+        <br/>
+        <h:panelGroup id="staffPanel">
+            <p:dataTable value="#{staffSearchController.staffsList}" var="staff" 
+                         paginator="true" paginatorPosition="bottom" rows="#{cc.attrs.rows}" style="width: 99%;overflow: auto;">
+
+                <p:column headerText="Staff No.">
+                    <h:outputText value="" 
+                                  rendered="#{empty cc.attrs.staffSelectAction}" />                        
+                </p:column>
+
+                <p:column headerText="Email">
+                    <h:outputText value="#{staff.email}" 
+                                  rendered="#{empty cc.attrs.staffSelectAction}" />                        
+                </p:column>
+
+                <p:column headerText="Mobile No.">
+                    <h:outputText value="#{staff.mobileNumber}" 
+                                  rendered="#{empty cc.attrs.staffSelectAction}" />
+                </p:column>
+                <p:column headerText="Action">
+                    <p:commandLink value="Select" styleClass="select" ajax="#{cc.attrs.ajax}"
+                                   rendered="#{not empty cc.attrs.staffSelectAction}"
+                                   action="#{cc.attrs.staffSelectAction}">
+                        <f:setPropertyActionListener value="#{staff}" target="#{staffSearchController.selectedStaff}" />
+                    </p:commandLink>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:panelGroup>
+
+    </cc:implementation>
+</html>
+

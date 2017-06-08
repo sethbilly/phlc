@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:phlc="http://xmlns.jcp.org/jsf/composite/phlc"
+      xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+    <ui:composition template="appTemplate.xhtml">
+        <ui:define name="mainMenu">
+            Consignment
+        </ui:define>
+        <ui:define name="subMenu">
+            Consignment
+        </ui:define>
+        <ui:define name="pageContent">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-flat">
+
+                        <div class="panel-body" style="display: block;">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h:form>
+                                        <phlc:clientSearch clientSelectAction="#{consignmentController.selectClientAction()}"/>
+                                    </h:form>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <h:form id="consignmentForm">
+                                        <p:panel header="Consignment Information">
+                                            <h:panelGroup>
+                                                <h:panelGrid columns="4" styleClass="spaced-table">
+                                                    <h:outputText value="File No." styleClass="field-label"/>
+                                                    <p:inputText value="#{consignmentController.consignment.jobNo}" readonly="true"/>
+                                                    
+                                                    <h:outputText value="Vessel Name" styleClass="field-label"/>
+                                                    <p:inputText value="#{consignmentController.consignment.vesselName}" />
+
+                                                    <h:outputText value="Vessel No." styleClass="field-label"/>
+                                                    <p:inputText value="#{consignmentController.consignment.vesselNumber}" />
+
+                                                    <h:outputText value="ETA Date" styleClass="field-label"/>
+                                                    <p:calendar mode="popup" value="#{consignmentController.consignment.etaDate}" 
+                                                                pattern="dd/MM/yyyy" navigator="true"/>
+
+                                                    <h:outputText value="Cargo Location" styleClass="field-label"/>
+                                                    <p:inputText value="#{consignmentController.consignment.cargoLocation}" />
+
+                                                    <h:outputText value="Hbl" styleClass="field-label"/>
+                                                    <p:inputText value="#{consignmentController.consignment.hbl}" />
+
+                                                    <h:outputText value="Mbl No." styleClass="field-label"/>
+                                                    <p:inputText value="#{consignmentController.consignment.mblNo}" />
+
+                                                    <h:outputText value="Weight/Volume" styleClass="field-label"/>
+                                                    <p:inputText value="#{consignmentController.consignment.weightVol}" />
+
+                                                </h:panelGrid>
+                                                <h:panelGrid columns="2" styleClass="spaced-table">
+                                                    <p:commandButton value="Save" ajax="false" action="#{consignmentController.createConsignment()}" />
+                                                    <p:commandButton value="Clear" ajax="false" action="#{consignmentController.clearForm()}" />
+                                                </h:panelGrid>
+                                            </h:panelGroup>
+                                        </p:panel>
+                                    </h:form>
+                                </div>
+                                <div class="col-lg-12">
+                                    <br />
+                                    <h:form>
+                                        <p:panel header="Consignments">
+                                            <p:dataTable value="#{consignmentController.consignmentsList}" var="consignment" paginator="true" rows="15"
+                                                         paginatorPosition="bottom">
+
+                                                <p:column headerText="Job No." styleClass="field-label">
+                                                    <h:outputText value="#{consignment.jobNo}" />
+                                                </p:column>
+                                                <p:column headerText="Eta Date" styleClass="field-label">
+                                                    <latlabfaces:dateDisplay value="#{consignment.etaDate}" />
+                                                </p:column>
+
+                                                <p:column headerText="Vessel No." styleClass="field-label">
+                                                    <h:outputText value="#{consignment.vesselNumber}" />
+                                                </p:column>
+                                                <p:column headerText="Vessel Name" styleClass="field-label">
+                                                    <h:outputText value="#{consignment.vesselName}" />
+                                                </p:column>
+                                                <p:column headerText="Hbl" styleClass="field-label">
+                                                    <h:outputText value="#{consignment.hbl}" />
+                                                </p:column>
+                                                <p:column headerText="Mbl" styleClass="field-label">
+                                                    <h:outputText value="#{consignment.mblNo}" />
+                                                </p:column>
+
+
+                                                <p:column headerText="Actions" styleClass="field-label">
+                                                    <p:commandLink value="Select" update="@form :consignmentForm" ajax="true"
+                                                                   action="#{consignmentController.selectConsignment(consignment)}"/> |
+                                                    <p:commandLink update="@form" value="Delete" ajax="true"
+                                                                   action="#{consignmentController.deleteConsignment(consignment)}" />
+                                                </p:column>
+                                            </p:dataTable>
+                                        </p:panel>
+                                    </h:form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:head>
+        <title><ui:insert name="pageTitle">PHLC</ui:insert></title>
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Pacific Heavens Logistics</title>
+
+        <!-- Global stylesheets -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css"/>
+        <link href="#{application.contextPath}/resources/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css"/>
+        <link href="#{application.contextPath}/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="#{application.contextPath}/resources/css/core.css" rel="stylesheet" type="text/css"/>
+        <link href="#{application.contextPath}/resources/css/components-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="#{application.contextPath}/resources/css/vanguard.css" rel="stylesheet" type="text/css"/>
+        <!-- /global stylesheets -->
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+
+    </h:head>
+    <h:body class="navbar-top">
+
+        <!-- Main navbar -->
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="home.xhtml">Pacific Heavens Logistics</a>
+
+                <ul class="nav navbar-nav visible-xs-block">
+                    <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                    <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+                </ul>
+            </div>
+
+            <div class="navbar-collapse collapse" id="navbar-mobile">
+
+
+                <h:form>
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li class="dropdown dropdown-user">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="#{application.contextPath}/resources/images/profile-img.png"  alt=""/>
+                                <span ></span>
+                                <i class="caret"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="#"><i class="icon-user-plus"></i> My profile</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
+                                <li><a jsf:action="#{loginController.logout()}"><i class="icon-switch2" ></i> Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </h:form>
+            </div>
+        </div>
+        <!-- /main navbar -->
+
+
+        <!-- Page container -->
+        <div class="page-container">
+
+            <!-- Page content -->
+            <div class="page-content">
+
+                <!-- Main sidebar -->
+                <div class="sidebar sidebar-main sidebar-fixed">
+                    <div class="sidebar-content">
+
+                        <!-- User menu -->
+                        <div class="sidebar-user">
+                            <div class="category-content">
+                                <div class="media">
+                                    <a href="#" class="media-left"><img src="#{application.contextPath}/resources/images/profile-img.png" class="img-circle img-sm"  alt=""/></a>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold text-theme"></span>
+                                        <div class="text-size-mini text-muted ">
+                                            <span style="color: #000;"> Administrator</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="media-right media-middle">
+                                        <ul class="icons-list">
+                                            <li>
+                                                <a href="#"><i class="icon-cog3"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /user menu -->
+                        <!-- Main navigation -->
+                        <div class="sidebar-category sidebar-category-visible" >
+                            <ui:include src="../resources/includes/appMenus.xhtml" />
+                        </div>
+                        
+
+                    </div>
+                </div>
+                <!-- /main sidebar -->
+
+
+                <!-- Main content -->
+                <div class="content-wrapper">
+                    
+                    <div class="page-header page-header-default">
+                        <div class="breadcrumb-line">
+                            <ul class="breadcrumb">
+                                <li><a href="#mainMenu"><ui:insert name="mainMenu">Main Menu</ui:insert></a></li>
+                                <li><a href="#submenu" style="font-size: 1.2em;" class="active field-label-required">
+                                        <ui:insert name="subMenu">Current Page</ui:insert>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="padding: 10px;">
+                        <p:messages autoUpdate="true"/>
+                        <ui:insert name="pageContent">
+                    </ui:insert>
+                    </div>
+                    
+
+                </div>
+                <!-- /main content -->
+
+            </div>
+            <!-- /page content -->
+
+        </div>
+        <!-- /page container -->
+
+
+        <!-- Core JS files -->
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/plugins/loaders/pace.min.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/core/libraries/bootstrap.min.js"></script>
+        <script type="text/javascript" src="#{application.contextPath}/resources/js/core/app.js"></script>
+    </h:body>
+</html>
+
