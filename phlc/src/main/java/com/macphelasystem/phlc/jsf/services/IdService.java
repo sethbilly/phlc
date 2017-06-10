@@ -41,4 +41,48 @@ public class IdService implements Serializable
     {
         
     }
+    
+    public String generateRandomNumber()
+    {
+        try {
+            return randomstring();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    private  static String randomstring(int lo, int hi)
+    {
+        int n = rand(lo, hi);
+        byte b[] = new byte[n];
+        for (int i = 0; i < n; i++)
+        {
+            b[i] = (byte) rand('0', '9');
+        }
+        return new String(b, 0);
+    }
+
+    private static int rand(int lo, int hi)
+    {
+        java.util.Random rn = new java.util.Random();
+        int n = hi - lo + 1;
+        int i = rn.nextInt(n);
+        if (i < 0)
+        {
+            i = -i;
+        }
+        return lo + i;
+    }
+
+    private static String randomstring()
+    {
+        return randomstring(9, 9);
+    }
+    
+    public static void main(String[] args)
+    {
+        
+        System.out.println("random string " + randomstring());
+    }
 }

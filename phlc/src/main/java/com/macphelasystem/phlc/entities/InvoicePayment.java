@@ -49,6 +49,12 @@ public class InvoicePayment extends DateRecord implements Serializable
     
     @Column(name = "payment_number")
     private String paymentNumber;
+    
+    @Column(name = "receipt_number")
+    private String receiptNumber;
+    
+    @Column(name = "receipt_printed")
+    private boolean receiptPrinted;
 
     public PaymentType getPaymentType()
     {
@@ -98,6 +104,22 @@ public class InvoicePayment extends DateRecord implements Serializable
     public void setPaymentNumber(String paymentNumber)
     {
         this.paymentNumber = paymentNumber;
+    }
+
+    public boolean isReceiptPrinted() {
+        return receiptPrinted;
+    }
+
+    public void setReceiptPrinted(boolean receiptPrinted) {
+        this.receiptPrinted = receiptPrinted;
+    }
+
+    public String getReceiptNumber() {
+        return receiptNumber;
+    }
+
+    public void setReceiptNumber(String receiptNumber) {
+        this.receiptNumber = receiptNumber;
     }
     
 }

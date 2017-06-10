@@ -6,12 +6,15 @@
 package com.macphelasystem.phlc.jsf.controllers;
 
 import com.latlab.common.imageutils.ImageResource;
+import com.latlab.common.reporting.ReportData;
 import com.macphelasystem.phlc.entities.Invoice;
 import com.macphelasystem.phlc.entities.InvoiceItem;
+import com.macphelasystem.phlc.entities.InvoicePayment;
 import com.macphelasystem.phlc.jsf.services.CommonService;
 import com.macphelasystem.phlc.jsf.services.InvoiceService;
 import com.macphelasystem.phlc.models.InvoiceDetailReport;
 import com.macphelasystem.phlc.models.InvoiceItemReport;
+import com.macphelasystem.phlc.models.InvoicePaymentReceipt;
 import com.macphelasystem.phlc.utils.ReportGenerator;
 import com.stately.common.utils.ImageUtils;
 import java.io.InputStream;
@@ -49,7 +52,6 @@ public class ReportController extends ReportGenerator implements Serializable
             InvoiceDetailReport invoiceDetailReport = new InvoiceDetailReport();
             invoiceDetailReport.processInvoice(selectedInvoice);
             List<InvoiceItem> invoiceItemsList = invoiceService.invoiceItemsFindByInvoice(selectedInvoice, false);
-            System.out.println("invoiceItemsList " + invoiceItemsList.size());
             
             if (invoiceItemsList.isEmpty())
             {
@@ -66,6 +68,7 @@ public class ReportController extends ReportGenerator implements Serializable
             addParam("polPod", invoiceDetailReport.getPolPod());
             addParam("hbl", invoiceDetailReport.getHbl());
             addParam("mbl", invoiceDetailReport.getMbl());
+            addParam("invoiceNumber", invoiceDetailReport.getInvoiceNumber());
             
             InputStream invoiceReportStream = this.getClass().getResourceAsStream(ReportFiles.proforma_invoice);
             
@@ -75,5 +78,33 @@ public class ReportController extends ReportGenerator implements Serializable
             e.printStackTrace();
         }
 
+    }
+    
+    public void printInvoicePaymentReceipt(InvoicePayment selectedInvoice)
+    {
+        try {
+            InvoicePaymentReceipt invoicePaymentReceipt = new InvoicePaymentReceipt();
+            invoicePaymentReceipt.processInvoice(selectedInvoice);
+            
+            addParam("invoiceNumber", invoicePaymentReceipt.getInvoiceNumber());
+            addParam("jobNumber", invoicePaymentReceipt.getJobFileNo());
+            addParam("receiptNumber", invoicePaymentReceipt.getReceiptNumber());
+            addParam("paymentMethod", invoicePaymentReceipt.getPaymentMode());
+            addParam("receiptDate", invoicePaymentReceipt.getReceiptDate());
+            addParam("consignee", invoicePaymentReceipt.getConsignee());
+            addParam("receivedBy", invoicePaymentReceipt.getReceivedBy());
+            
+            addParam("invoiceAmount", invoicePaymentReceipt.getInvoiceAmount());
+            addParam("balance", invoicePaymentReceipt.getBalance());
+            addParam("amountPaid", invoicePaymentReceipt.getAmountPaid());
+            
+            
+            InputStream receiptReportStream = this.getClass().getResourceAsStream(ReportFiles.invoice_receipt);
+            ReportData reportData = new ReportData(invoicePaymentReceipt, "");
+           
+            showReport(reportData, receiptReportStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

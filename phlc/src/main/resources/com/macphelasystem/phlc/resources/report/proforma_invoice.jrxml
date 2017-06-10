@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2017-05-27T20:54:43 -->
+<!-- 2017-06-10T14:06:01 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="proforma_invoice" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="310c41ef-2e58-4883-9020-a0ada1b8193d">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="invoiceNumber" class="java.lang.String"/>
@@ -137,7 +137,7 @@
 				<reportElement x="130" y="3" width="300" height="16" uuid="4aa0fdd0-2fc4-4a60-8172-3bb3c8cb7460"/>
 				<staticText>
 					<reportElement x="-9" y="0" width="300" height="16" uuid="fd1cad01-2df6-41eb-99a3-7ad21b5aaa44"/>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Left">
 						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PACIFIC HEAVENS LOGISTICS COMPANY LIMITED]]></text>
@@ -147,13 +147,6 @@
 				<reportElement x="10" y="3" width="69" height="50" uuid="87992a11-c2f8-48f7-84bc-6b3b89221ffd"/>
 				<imageExpression><![CDATA[$P{companyLogo}]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement x="410" y="50" width="145" height="30" uuid="550cec0a-ec09-4773-b07d-7dc0ea1c366f"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[PROFORMA INVOICE]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="121" y="21" width="249" height="13" uuid="649b2a29-c47c-4778-b86e-29cdee064543">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -190,6 +183,13 @@
 				</textElement>
 				<text><![CDATA[Email:pacificheavens@hotmail.com | info@pacificheavens.com]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="415" y="52" width="135" height="30" uuid="885b6408-9f4f-4a54-b2f0-b72cf5d872be"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROFORMA INVOICE]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -201,7 +201,7 @@
 			<staticText>
 				<reportElement x="9" y="38" width="71" height="14" uuid="f5a4d8d2-d534-4583-9539-a46bf70ea0de"/>
 				<textElement textAlignment="Left">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TO:]]></text>
 			</staticText>
@@ -261,7 +261,7 @@
 				</textElement>
 				<text><![CDATA[WEIGHT/VOL:]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="380" y="6" width="163" height="14" uuid="0c87bf33-5907-4302-951d-c4f7bba77de4"/>
 				<textElement>
 					<font size="8"/>
@@ -273,7 +273,8 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{invoiceDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{invoiceNumber}
+]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="104" y="24" width="163" height="14" uuid="a8130fb0-58fd-4f5c-88f3-d6e29d7f419d"/>
@@ -289,7 +290,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{consignee}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="104" y="52" width="163" height="14" uuid="6d157e79-88b2-491d-b05b-b6beca3ab39d"/>
 				<textElement>
 					<font size="8"/>

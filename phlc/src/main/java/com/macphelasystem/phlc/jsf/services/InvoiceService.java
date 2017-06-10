@@ -80,4 +80,21 @@ public class InvoiceService implements Serializable
         return Collections.EMPTY_LIST;
     }
     
+    public void updateInvoice(InvoicePayment selectedInvoice)
+    {
+        try {
+            Invoice invoice = selectedInvoice.getInvoice();
+            double amountPaid = selectedInvoice.getAmountPaying();
+            double totalAmount = selectedInvoice.getInvoice().getTotalAmount();
+            double totalPaid = invoice.getTotalPaid() + amountPaid;
+            double remainingBalance = totalAmount - totalPaid;
+            invoice.setTotalPaid(totalPaid);
+            invoice.setRemainingBalance(remainingBalance);
+            
+            crudService.updateEntity(invoice);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

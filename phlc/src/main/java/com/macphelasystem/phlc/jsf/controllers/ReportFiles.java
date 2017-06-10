@@ -14,4 +14,5 @@ public class ReportFiles
     private static final String REPORT_BASE_DIR = "/com/macphelasystem/phlc/resources/report/";
     
     public static final String proforma_invoice = REPORT_BASE_DIR + "proforma_invoice.jasper";
+    public static final String invoice_receipt = REPORT_BASE_DIR + "invoice_receipt.jasper";
 }

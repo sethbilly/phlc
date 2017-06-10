@@ -11,9 +11,11 @@ import com.macphelasystem.phlc.entities.InvoicePayment;
 import com.macphelasystem.phlc.jsf.services.CrudService;
 import com.macphelasystem.phlc.jsf.services.IdService;
 import com.macphelasystem.phlc.jsf.services.InvoiceService;
+import com.macphelasystem.phlc.jsf.services.UserSession;
 import com.macphelasystem.phlc.utils.Msg;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -34,6 +36,9 @@ public class InvoicePaymentController implements Serializable
     private IdService idService;
     @Inject
     private InvoiceService invoiceService;
+    @Inject
+    private ReportController reportController;
+    @Inject private UserSession userSession;
     private List<InvoicePayment> invoicePaymentsList = new ArrayList<>();
     private Invoice selectedInovice;
     private InvoicePayment invoicePayment = new InvoicePayment();
@@ -55,13 +60,18 @@ public class InvoicePaymentController implements Serializable
         }
         try
         {
+            invoicePayment.setValueDate(new Date());
             invoicePayment.setInvoice(selectedInovice);
+            invoicePayment.setReceiptNumber(idService.generateRandomNumber());
+            crudService.setCurrentUserID(userSession.getLoginUser().getId());
             crudService.save(invoicePayment);
             //TODO update invoice payments here
+            invoiceService.updateInvoice(invoicePayment);
             clearForm();
             Msg.successSave();
         } catch (Exception e)
         {
+            e.printStackTrace();
             Msg.failedSave();
         }
     }
@@ -90,6 +100,15 @@ public class InvoicePaymentController implements Serializable
         }else
         {
             renderPaymentNumberInput = false;
+        }
+    }
+    
+    public void printInvoiceReceipt(InvoicePayment selectedInvoicePayment) {
+        try {
+            //fetch invoice payments for selected invoice
+            reportController.printInvoicePaymentReceipt(selectedInvoicePayment);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -10,6 +10,7 @@ import com.macphelasystem.phlc.entities.UserAccount;
 import com.macphelasystem.phlc.jsf.services.CommonService;
 import com.macphelasystem.phlc.jsf.services.IdService;
 import com.macphelasystem.phlc.jsf.services.CrudService;
+import com.macphelasystem.phlc.jsf.services.UserSession;
 import com.macphelasystem.phlc.utils.Msg;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,8 +25,7 @@ import javax.inject.Named;
  */
 @Named(value = "userAccountController")
 @SessionScoped
-public class UserAccountController implements Serializable
-{
+public class UserAccountController implements Serializable {
 
     @Inject
     private CrudService crudService;
@@ -35,77 +35,68 @@ public class UserAccountController implements Serializable
     private CommonService commonService;
     @Inject
     private StaffSearchController staffSearchController;
+    @Inject private UserSession userSession;
     private UserAccount client = new UserAccount();
     private List<UserAccount> clientsList = new ArrayList<>();
     private Staff selectedStaff = null;
 
-    public void selectStaffAction()
-    {
+    public void selectStaffAction() {
         selectedStaff = staffSearchController.getSelectedStaff();
     }
 
-    public void saveUserAccount()
-    {
-        if (null != crudService.save(client))
-        {
-            Msg.successSave();
-            clearForm();
-        } else
-        {
-            Msg.failedSave();
+    public void saveUserAccount() {
+        try {
+            crudService.setCurrentUserID(userSession.getLoginUser().getId());
+            if (null != crudService.save(client)) {
+                Msg.successSave();
+                clearForm();
+            } else {
+                Msg.failedSave();
+            }
+        } catch (Exception e) {
         }
+
     }
 
-    public void clearForm()
-    {
+    public void clearForm() {
         client = new UserAccount();
     }
 
-    public void selectUserAccount(UserAccount c)
-    {
+    public void selectUserAccount(UserAccount c) {
         client = c;
     }
 
-    public void deleteUserAccount(UserAccount selectedUserAccount)
-    {
+    public void deleteUserAccount(UserAccount selectedUserAccount) {
 
-        if (crudService.delete(selectedUserAccount, false))
-        {
+        if (crudService.delete(selectedUserAccount, false)) {
             Msg.successDelete();
-        } else
-        {
+        } else {
             Msg.failedDelete();
         }
     }
 
-    public UserAccount getUserAccount()
-    {
+    public UserAccount getUserAccount() {
         return client;
     }
 
-    public void setUserAccount(UserAccount client)
-    {
+    public void setUserAccount(UserAccount client) {
         this.client = client;
     }
 
-    public List<UserAccount> getUserAccountsList()
-    {
+    public List<UserAccount> getUserAccountsList() {
         clientsList = commonService.getUserAccountsList();
         return clientsList;
     }
 
-    public void setUserAccountsList(List<UserAccount> clientsList)
-    {
+    public void setUserAccountsList(List<UserAccount> clientsList) {
         this.clientsList = clientsList;
     }
 
-    public Staff getSelectedStaff()
-    {
+    public Staff getSelectedStaff() {
         return selectedStaff;
     }
 
-    public void setSelectedStaff(Staff selectedStaff)
-    {
+    public void setSelectedStaff(Staff selectedStaff) {
         this.selectedStaff = selectedStaff;
     }
 

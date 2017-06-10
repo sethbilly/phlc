@@ -68,13 +68,15 @@
                                                             <p:menuitem update="@form" value="Delete" ajax="true"
                                                                         action="#{invoiceController.deleteInvoice(invoice)}"/>
                                                             <p:separator />
-                                                            <p:menuitem value="Print" ajax="false" target="_blank" 
+                                                            <p:menuitem value="Print Invoice" ajax="false" target="_blank" 
                                                                         action="#{invoiceController.printInvoice(invoice)}"/>
                                                             <p:menuitem value="Add Invoice Item" action="#{invoiceController.addItemToInvoice(invoice)}"
                                                                         ajax="false"/>
                                                             <p:menuitem value="View Invoice Items" action="#{invoiceController.addItemToInvoice(invoice)}"
                                                                         ajax="false"/>
                                                             <p:menuitem value="Invoice Payment" action="#{invoiceController.addInvoicePayment(invoice)}"
+                                                                        ajax="false"/>
+                                                            <p:menuitem value="Print Invoice Receipt" action="#{invoiceController.printInvoiceReceipt(invoice)}"
                                                                         ajax="false"/>
                                                         </p:menuButton>
 

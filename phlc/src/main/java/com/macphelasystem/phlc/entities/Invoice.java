@@ -48,6 +48,10 @@ public class Invoice extends DateRecord implements Serializable
     
     @Column(name = "processed")
     private boolean processed;
+    
+    @Column(name = "total_paid")
+    private double totalPaid;
+    
 
     public String getInvoiceNumber()
     {
@@ -107,6 +111,14 @@ public class Invoice extends DateRecord implements Serializable
     public void setProcessed(boolean processed)
     {
         this.processed = processed;
+    }
+
+    public double getTotalPaid() {
+        return totalPaid;
+    }
+
+    public void setTotalPaid(double totalPaid) {
+        this.totalPaid = totalPaid;
     }
     
     

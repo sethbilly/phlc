@@ -10,6 +10,7 @@ import com.macphelasystem.phlc.entities.InvoiceItem;
 import com.macphelasystem.phlc.jsf.services.CrudService;
 import com.macphelasystem.phlc.jsf.services.IdService;
 import com.macphelasystem.phlc.jsf.services.InvoiceService;
+import com.macphelasystem.phlc.jsf.services.UserSession;
 import com.macphelasystem.phlc.utils.Msg;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,117 +25,106 @@ import javax.inject.Named;
  */
 @Named(value = "invoiceItemController")
 @SessionScoped
-public class InvoiceItemController implements Serializable
-{
-    @Inject private CrudService crudService;
-    @Inject private IdService idService;
-    @Inject private InvoiceService invoiceService;
+public class InvoiceItemController implements Serializable {
+
+    @Inject
+    private CrudService crudService;
+    @Inject
+    private IdService idService;
+    @Inject
+    private InvoiceService invoiceService;
+    @Inject private UserSession userSession;
     private InvoiceItem invoiceItem = new InvoiceItem();
     private List<InvoiceItem> invoiceItemsList = new ArrayList<>();
     private Invoice selectedInovice;
     private List<InvoiceItem> invoiceItems = new ArrayList<>();
-    
-    public void addInvoiceItem()
-    {
+
+    public void addInvoiceItem() {
         invoiceItemsList.add(invoiceItem);
         clearForm();
     }
-    
-    public void  clearForm()
-    {
+
+    public void clearForm() {
         invoiceItem = new InvoiceItem();
     }
-    
-    public void removeInvoiceItem(InvoiceItem item)
-    {
+
+    public void removeInvoiceItem(InvoiceItem item) {
         invoiceItemsList.remove(item);
     }
-    
-    public void clearInvoiceItemsList()
-    {
+
+    public void clearInvoiceItemsList() {
         invoiceItemsList.clear();
     }
-    
-    public void saveInvoiceItems()
-    {
-        if(selectedInovice == null)
-        {
+
+    public void saveInvoiceItems() {
+        if (selectedInovice == null) {
             Msg.genericError("Cancel and Select an invoice to add items");
         }
-        try
-        {
-            for(InvoiceItem invItem : invoiceItemsList)
-            {
-//                InvoiceItem item = new InvoiceItem();
+        try {
+            crudService.setCurrentUserID(userSession.getLoginUser().getId());
+            for (InvoiceItem invItem : invoiceItemsList) {
                 invItem.setExRate(invItem.getExRate());
                 invItem.setInvoice(selectedInovice);
+                
                 crudService.save(invItem);
             }
+            double totalAmount = invoiceItemsList.stream()
+                    .map(inv -> inv.getAmount())
+                    .reduce(0.0, Double::sum);
+            //update invoice amount
+            selectedInovice.setTotalAmount(totalAmount);
+            crudService.update(selectedInovice);
             clearInvoiceItemsList();
             Msg.successSave();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             Msg.failedSave();
-        }  
+        }
     }
-    
-    public void selectInvoiceItem(InvoiceItem invItem)
-    {
+
+    public void selectInvoiceItem(InvoiceItem invItem) {
         invoiceItem = invItem;
     }
-    
-    public void deleteInvoiceItem(InvoiceItem invItem)
-    {
-        if(crudService.delete(invItem, false))
-        {
+
+    public void deleteInvoiceItem(InvoiceItem invItem) {
+        if (crudService.delete(invItem, false)) {
             Msg.successDelete();
-        }else
-        {
+        } else {
             Msg.failedDelete();
         }
     }
 
-    public InvoiceItem getInvoiceItem()
-    {
+    public InvoiceItem getInvoiceItem() {
         return invoiceItem;
     }
 
-    public void setInvoiceItem(InvoiceItem invoiceItem)
-    {
+    public void setInvoiceItem(InvoiceItem invoiceItem) {
         this.invoiceItem = invoiceItem;
     }
 
-    public List<InvoiceItem> getInvoiceItemsList()
-    {
+    public List<InvoiceItem> getInvoiceItemsList() {
         return invoiceItemsList;
     }
 
-    public void setInvoiceItemsList(List<InvoiceItem> invoiceItemsList)
-    {
+    public void setInvoiceItemsList(List<InvoiceItem> invoiceItemsList) {
         this.invoiceItemsList = invoiceItemsList;
     }
 
-    public Invoice getSelectedInovice()
-    {
+    public Invoice getSelectedInovice() {
         return selectedInovice;
     }
 
-    public void setSelectedInovice(Invoice selectedInovice)
-    {
+    public void setSelectedInovice(Invoice selectedInovice) {
         this.selectedInovice = selectedInovice;
     }
 
-    public List<InvoiceItem> getInvoiceItems()
-    {
+    public List<InvoiceItem> getInvoiceItems() {
         invoiceItems = invoiceService.invoiceItemsFindByInvoice(selectedInovice, false);
         return invoiceItems;
     }
 
-    public void setInvoiceItems(List<InvoiceItem> invoiceItems)
-    {
+    public void setInvoiceItems(List<InvoiceItem> invoiceItems) {
         this.invoiceItems = invoiceItems;
     }
-    
-    
+
 }

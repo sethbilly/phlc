@@ -11,6 +11,7 @@ import com.macphelasystem.phlc.entities.Invoice;
 import com.macphelasystem.phlc.jsf.services.ConsignmentService;
 import com.macphelasystem.phlc.jsf.services.CrudService;
 import com.macphelasystem.phlc.jsf.services.IdService;
+import com.macphelasystem.phlc.jsf.services.UserSession;
 import com.macphelasystem.phlc.utils.Msg;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class ConsignmentController implements Serializable
     @Inject private IdService idService;
     @Inject private ConsignmentService consignmentService;
     @Inject private ClientSearch clientSearch;
+    @Inject private UserSession userSession;
     private Client selectedClient;
     private Consignment consignment = new Consignment();
     private List<Consignment> consignmentsList = new ArrayList<>();
@@ -47,6 +49,7 @@ public class ConsignmentController implements Serializable
             Msg.genericError("ETA Date is required");
             return;
         }
+        crudService.setCurrentUserID(userSession.getLoginUser().getId());
         consignment.setClient(selectedClient);
         if(null != crudService.save(consignment))
         {

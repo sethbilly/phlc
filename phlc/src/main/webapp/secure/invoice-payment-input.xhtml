@@ -47,10 +47,15 @@
                     <p:column headerText="Amount">
                         <latlabfaces:doubleDisplay value="#{invPayment.amountPaying}"/>
                     </p:column>
+                    <p:column headerText="Payment Method">
+                        <h:outputText value="#{invPayment.paymentType}"/>
+                    </p:column>
                     <p:column headerText="Actions">
                         <h:form>
                             <p:commandLink value="Select" action="#{invoicePaymentController.selectInvoicePayment(invPayment)}" ajax="true"
                                            update="@form :paymentForm"/> |
+                            <p:commandLink value="Print Receipt" action="#{invoicePaymentController.printInvoiceReceipt(invPayment)}" ajax="false"
+                                           rendered="#{!invPayment.receiptPrinted}" target="_blank"/> |
                             <p:commandLink value="Delete" action="#{invoiceItemController.deleteInvoiceItem(invItem)}" ajax="false"
                                            />
                         </h:form>

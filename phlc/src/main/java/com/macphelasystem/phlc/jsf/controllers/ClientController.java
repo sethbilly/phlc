@@ -10,6 +10,7 @@ import com.macphelasystem.phlc.entities.Consignment;
 import com.macphelasystem.phlc.jsf.services.ClientService;
 import com.macphelasystem.phlc.jsf.services.IdService;
 import com.macphelasystem.phlc.jsf.services.CrudService;
+import com.macphelasystem.phlc.jsf.services.UserSession;
 import com.macphelasystem.phlc.utils.Msg;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,12 +32,14 @@ public class ClientController implements Serializable
     @Inject private IdService idService;
     @Inject private ClientService clientService;
     @Inject private ConsignmentController consignmentController;
+    @Inject private UserSession userSession;
     private Client client = new Client();
     private List<Client> clientsList = new ArrayList<>();
     
     
     public void saveClient()
     {
+       crudService.setCurrentUserID(userSession.getLoginUser().getId());
         if(null != crudService.save(client))
         {
             Msg.successSave();

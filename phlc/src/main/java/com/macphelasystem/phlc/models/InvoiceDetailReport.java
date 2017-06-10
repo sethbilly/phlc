@@ -18,7 +18,6 @@ import java.util.List;
 public class InvoiceDetailReport
 {
     private String vesselName;
-    private String vesselNumber;
     private String containerNumber;
     private String hbl;
     private String mbl;
@@ -39,7 +38,6 @@ public class InvoiceDetailReport
             if(null != invoice.getConsignment())
             {
                 this.vesselName = invoice.getConsignment().getVesselName();
-                this.vesselNumber = invoice.getConsignment().getVesselNumber();
                 this.etaDate = invoice.getConsignment().getEtaDate();
                 this.hbl = invoice.getConsignment().getHbl();
                 this.mbl = invoice.getConsignment().getMblNo();
@@ -48,6 +46,8 @@ public class InvoiceDetailReport
                 this.cargoLocation = invoice.getConsignment().getCargoLocation();
                 this.hbl = invoice.getConsignment().getHbl();
                 this.invoiceNumber = invoice.getInvoiceNumber();
+                this.consignee = invoice.getConsignment().getClient().getFullName();
+                this.containerNumber = invoice.getConsignment().getVesselNumber();
             }
             
             //Find all invoice items for selected invoice
@@ -144,17 +144,7 @@ public class InvoiceDetailReport
     {
         this.invoiceDate = invoiceDate;
     }
-
-    public String getVesselNumber()
-    {
-        return vesselNumber;
-    }
-
-    public void setVesselNumber(String vesselNumber)
-    {
-        this.vesselNumber = vesselNumber;
-    }
-
+    
     public String getContainerNumber()
     {
         return containerNumber;
