@@ -5,6 +5,7 @@
  */
 package com.macphelasystem.phlc.jsf.controllers;
 
+import com.latlab.common.formating.NumberToWords;
 import com.latlab.common.imageutils.ImageResource;
 import com.latlab.common.reporting.ReportData;
 import com.macphelasystem.phlc.entities.Invoice;
@@ -12,6 +13,7 @@ import com.macphelasystem.phlc.entities.InvoiceItem;
 import com.macphelasystem.phlc.entities.InvoicePayment;
 import com.macphelasystem.phlc.jsf.services.CommonService;
 import com.macphelasystem.phlc.jsf.services.InvoiceService;
+import com.macphelasystem.phlc.jsf.services.UserSession;
 import com.macphelasystem.phlc.models.InvoiceDetailReport;
 import com.macphelasystem.phlc.models.InvoiceItemReport;
 import com.macphelasystem.phlc.models.InvoicePaymentReceipt;
@@ -38,6 +40,8 @@ public class ReportController extends ReportGenerator implements Serializable
     private CommonService commonService;
     @Inject
     private InvoiceService invoiceService;
+    @Inject
+    private UserSession userSession;
 
     @PostConstruct
     private void init()
@@ -58,6 +62,8 @@ public class ReportController extends ReportGenerator implements Serializable
                 return;
             }
             List<InvoiceItemReport> invoiceItemReportsList = InvoiceDetailReport.convertInvoiceItems(invoiceItemsList);
+            double grandTotal = invoiceItemReportsList.stream()
+                    .mapToDouble(s -> s.getAmount()).sum();
             addParam("invoiceNumber", invoiceDetailReport.getInvoiceNumber());
             addParam("jobNumber", invoiceDetailReport.getInvoiceNumber());
             addParam("etaDate", invoiceDetailReport.getEtaDate());
@@ -69,6 +75,8 @@ public class ReportController extends ReportGenerator implements Serializable
             addParam("hbl", invoiceDetailReport.getHbl());
             addParam("mbl", invoiceDetailReport.getMbl());
             addParam("invoiceNumber", invoiceDetailReport.getInvoiceNumber());
+            addParam("amountInWord", NumberToWords.getInstance().convertToWords(grandTotal));
+            addParam("printedBy", userSession.getLoginUser().getStaff().getFullName());
             
             InputStream invoiceReportStream = this.getClass().getResourceAsStream(ReportFiles.proforma_invoice);
             
@@ -97,6 +105,7 @@ public class ReportController extends ReportGenerator implements Serializable
             addParam("invoiceAmount", invoicePaymentReceipt.getInvoiceAmount());
             addParam("balance", invoicePaymentReceipt.getBalance());
             addParam("amountPaid", invoicePaymentReceipt.getAmountPaid());
+            addParam("amountInWord", NumberToWords.getInstance().convertToWords(invoicePaymentReceipt.getAmountPaid()));
             
             
             InputStream receiptReportStream = this.getClass().getResourceAsStream(ReportFiles.invoice_receipt);
