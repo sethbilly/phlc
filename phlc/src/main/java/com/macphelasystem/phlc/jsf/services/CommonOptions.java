@@ -7,6 +7,7 @@ package com.macphelasystem.phlc.jsf.services;
 
 import com.macphelasystem.phlc.constants.InvoiceItemType;
 import com.macphelasystem.phlc.constants.PaymentType;
+import com.macphelasystem.phlc.constants.UserAccountCategory;
 import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -34,5 +35,7 @@ public class CommonOptions
         return Arrays.asList(InvoiceItemType.values());
     }
     
-    
+    public List<UserAccountCategory> getUserAccountCategoryList(){
+        return Arrays.asList(UserAccountCategory.values());
+    }
 }

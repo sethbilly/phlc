@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:phlc="http://xmlns.jcp.org/jsf/composite/phlc">
+      xmlns:phlc="http://xmlns.jcp.org/jsf/composite/phlc"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="appTemplate.xhtml">
         <ui:define name="mainMenu">
             User Account
@@ -32,19 +33,23 @@
                                             <h:panelGroup>
 
                                                 <h:panelGrid columns="2" styleClass="spaced-table">
-
+                                                    <h:outputText value="User Category" />
+                                                    <h:selectOneMenu value="#{userAccountController.userAccount.userAccountCategory}">
+                                                        <f:selectItem itemLabel="--Select One--"/>
+                                                        <f:selectItems value="#{commonOptions.userAccountCategoryList}"/>
+                                                    </h:selectOneMenu>
                                                     <h:outputText value="Password" styleClass="field-label"/>
-                                                    <p:inputText value="#{clientController.client.fullName}" />
+                                                    <p:inputText value="#{userAccountController.userAccount.passwd}" />
 
                                                     <h:outputText value="Retype Password" styleClass="field-label"/>
-                                                    <p:inputText value="#{clientController.client.mobileNumber}" />
+                                                    <p:inputText value="#{userAccountController.confirmPwd}" />
                                                 </h:panelGrid>
                                             </h:panelGroup>
                                             <h:panelGrid columns="2" styleClass="spaced-table">
                                                 <p:commandButton value="Save" ajax="false"
-                                                                 action="#{clientController.saveClient()}"/>
+                                                                 action="#{userAccountController.saveUserAccount()}"/>
                                                 <p:commandButton value="Clear" ajax="false"
-                                                                 action="#{clientController.clearForm()}"/>
+                                                                 action="#{userAccountController.clearForm()}"/>
 
                                             </h:panelGrid>
 
@@ -56,17 +61,20 @@
                                 <div class="col-lg-6">
                                     <h:form>
                                         <p:panel header="User Accounts">
-                                            <p:dataTable value="#{clientController.clientsList}" var="cust" paginator="true" rows="15"
+                                            <p:dataTable value="#{userAccountController.userAccountsList}" var="userAccount" paginator="true" rows="15"
                                                          paginatorPosition="bottom">
 
                                                 <p:column headerText="FullName" styleClass="field-label">
-                                                    <h:outputText value="#{cust.fullName}" />
+                                                    <h:outputText value="#{userAccount.staff.fullName}" />
                                                 </p:column>
 
                                                 <p:column headerText="Email" styleClass="field-label">
-                                                    <h:outputText value="#{cust.mobileNumber}" />
+                                                    <h:outputText value="#{userAccount.staff.email}" />
                                                 </p:column>
-
+                                                
+                                                 <p:column headerText="User Category" styleClass="field-label">
+                                                     <h:outputText value="#{userAccount.userAccountCategory.label}" />
+                                                </p:column>
 
                                                 <p:column headerText="Actions" styleClass="field-label">
                                                     <p:commandLink value="Select" update="@form :accountForm" ajax="true"

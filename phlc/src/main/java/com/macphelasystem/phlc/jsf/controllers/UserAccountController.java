@@ -36,9 +36,10 @@ public class UserAccountController implements Serializable {
     @Inject
     private StaffSearchController staffSearchController;
     @Inject private UserSession userSession;
-    private UserAccount client = new UserAccount();
-    private List<UserAccount> clientsList = new ArrayList<>();
+    private UserAccount userAccount = new UserAccount();
+    private List<UserAccount> userAccountList = new ArrayList<>();
     private Staff selectedStaff = null;
+    private String confirmPwd = "";
 
     public void selectStaffAction() {
         selectedStaff = staffSearchController.getSelectedStaff();
@@ -47,7 +48,7 @@ public class UserAccountController implements Serializable {
     public void saveUserAccount() {
         try {
             crudService.setCurrentUserID(userSession.getLoginUser().getId());
-            if (null != crudService.save(client)) {
+            if (null != crudService.save(userAccount)) {
                 Msg.successSave();
                 clearForm();
             } else {
@@ -59,11 +60,11 @@ public class UserAccountController implements Serializable {
     }
 
     public void clearForm() {
-        client = new UserAccount();
+        userAccount = new UserAccount();
     }
 
     public void selectUserAccount(UserAccount c) {
-        client = c;
+        userAccount = c;
     }
 
     public void deleteUserAccount(UserAccount selectedUserAccount) {
@@ -76,20 +77,20 @@ public class UserAccountController implements Serializable {
     }
 
     public UserAccount getUserAccount() {
-        return client;
+        return userAccount;
     }
 
-    public void setUserAccount(UserAccount client) {
-        this.client = client;
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
     }
 
     public List<UserAccount> getUserAccountsList() {
-        clientsList = commonService.getUserAccountsList();
-        return clientsList;
+        userAccountList = commonService.getUserAccountsList();
+        return userAccountList;
     }
 
-    public void setUserAccountsList(List<UserAccount> clientsList) {
-        this.clientsList = clientsList;
+    public void setUserAccountsList(List<UserAccount> userAccountList) {
+        this.userAccountList = userAccountList;
     }
 
     public Staff getSelectedStaff() {
@@ -100,4 +101,12 @@ public class UserAccountController implements Serializable {
         this.selectedStaff = selectedStaff;
     }
 
+    public String getConfirmPwd() {
+        return confirmPwd;
+    }
+
+    public void setConfirmPwd(String confirmPwd) {
+        this.confirmPwd = confirmPwd;
+    }
+    
 }
