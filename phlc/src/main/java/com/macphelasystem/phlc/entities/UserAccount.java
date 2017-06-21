@@ -6,10 +6,13 @@
 package com.macphelasystem.phlc.entities;
 
 import com.latlab.common.jpa.CommonModel;
+import com.macphelasystem.phlc.constants.UserAccountCategory;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -44,6 +47,25 @@ public class UserAccount extends CommonModel implements Serializable
     @Column(name = "last_logged_out")
     @Temporal(TemporalType.DATE)
     private Date lastLoggedOut;
+    
+    @Column(name = "user_category")
+    @Enumerated(EnumType.STRING)
+    private UserAccountCategory userAccountCategory;
+    
+    public boolean isSuperAdmin()
+    {
+        return userAccountCategory == UserAccountCategory.ADMINISTRATOR;
+    }
+    
+    public  boolean isFinance()
+    {
+        return userAccountCategory == UserAccountCategory.FINANCE;
+    }
+    
+    public  boolean isDocumentManager()
+    {
+        return userAccountCategory == UserAccountCategory.DOCUMENTATION_MANAGER;
+    }
 
     public String getUsername()
     {
@@ -103,6 +125,16 @@ public class UserAccount extends CommonModel implements Serializable
     public void setLastLoggedOut(Date lastLoggedOut)
     {
         this.lastLoggedOut = lastLoggedOut;
+    }
+
+    public UserAccountCategory getUserAccountCategory()
+    {
+        return userAccountCategory;
+    }
+
+    public void setUserAccountCategory(UserAccountCategory userAccountCategory)
+    {
+        this.userAccountCategory = userAccountCategory;
     }
     
     

@@ -13,7 +13,7 @@ import com.latlab.common.constants.EnumResolvable;
  */
 public enum UserAccountCategory implements EnumResolvable
 {
-    ACCOUNTANT("Accountant", "ACCOUNTANT"),
+    FINANCE("Finance", "FINANCE"),
     DOCUMENTATION_MANAGER("Documentation Manger", "DOCUMENTATION_MANAGER"),
     ADMINISTRATOR("Administrator", "ADMINISTRATOR");
     

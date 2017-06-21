@@ -8,6 +8,7 @@ package com.macphelasystem.phlc.jsf.controllers;
 import com.latlab.common.security.SecurityHash;
 import com.latlab.mojarra.jsf.JsfUtil;
 import com.latlab.mojarra.jsf.Msg;
+import com.macphelasystem.phlc.constants.UserAccountCategory;
 import com.macphelasystem.phlc.entities.Staff;
 import com.macphelasystem.phlc.entities.UserAccount;
 import com.macphelasystem.phlc.jsf.services.CommonService;
@@ -36,7 +37,7 @@ public class LoginController implements Serializable {
     private String passwd = "";
 
     private static final String _SUPER_ADMIN_USERNAME = "super@admin";
-    private static final String _SUPER_ADMIN_PWD = "phlc@admin$123";
+    private static final String _SUPER_ADMIN_PWD = "admin$123";
 
     public void login() {
         try {
@@ -47,6 +48,7 @@ public class LoginController implements Serializable {
                 staff.setId("super@admin");
                 staff.setFullName("super@admin");
                 account.setStaff(staff);
+                account.setUserAccountCategory(UserAccountCategory.DOCUMENTATION_MANAGER);
                 userSession.setLoginUser(account);
                 userSession.setLoggedIn(true);
                 
